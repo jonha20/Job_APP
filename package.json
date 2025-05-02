@@ -5,17 +5,20 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "dotenv": "^16.5.0",
+    "bcrypt": "^5.1.1",
     "body-parser": "^2.2.0",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "jws": "^4.0.0",
+    "mongodb": "^6.16.0",
     "mongoose": "^8.14.1",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.10",
     "oauth": "^0.10.2",
+    "pg": "^8.15.6",
+    "playwright": "^1.52.0",
     "pug": "^3.0.3",
-    "puppeteer": "^24.7.2",
-    "mongodb": "^6.16.0",
-    "playwright": "^1.52.0"
+    "puppeteer": "^24.7.2"
   }
 }
