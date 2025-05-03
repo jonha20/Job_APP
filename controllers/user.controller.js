@@ -1,53 +1,60 @@
-const User = require("../models/user.models");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const regex = require("../utils/regex");
+const User = require('../models/user.model');
 
-const userProfile = async (req, res) => {
-  try {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) {
-      return res.status(401).json({ message: "No token provided" });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.id;
-
-    const userRecord = await User.userProfile(userId);
-    if (!userRecord) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    res.status(200).json(userRecord);
-  } catch (error) {
-    res.status(500).json({ message: "Error retrieving user data", error });
-  }
-};
-
-const userFavorites = async (req, res) => { 
+// Registrar nuevo usuario
+const register = async (req, res) => {
     try {
-        const token = req.headers.authorization?.split(" ")[1];
-        if (!token) {
-        return res.status(401).json({ message: "No token provided" });
-        }
-    
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const userId = decoded.id;
-    
-        const favorites = await User.userFavorites(userId);
-        if (!favorites) {
-        return res.status(404).json({ message: "No favorites found" });
-        }
-    
-        res.status(200).json(favorites);
+        const { name, email, password } = req.body;
+        const user = new User({ name, email, password });
+        await user.save();
+        res.status(201).json({ message: 'Usuario registrado exitosamente', user: { id: user._id, name: user.name, email: user.email } });
     } catch (error) {
-        res.status(500).json({ message: "Error retrieving user favorites", error });
+        if (error.code === 11000) {
+            return res.status(400).json({ message: 'El email ya está registrado' });
+        }
+        res.status(500).json({ message: 'Error al registrar usuario', error: error.message });
     }
-    }
-
-const user = {
-    userProfile,
-    userFavorites,
 };
 
-module.exports = user;
+// Editar perfil de usuario
+const updateProfile = async (req, res) => {
+    try {
+        const { name, email } = req.body;
+        const userId = req.user.id;
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { name, email },
+            { new: true, select: '-password' }
+        );
+        res.json({ message: 'Perfil actualizado exitosamente', user });
+    } catch (error) {
+        res.status(500).json({ message: 'Error al actualizar perfil', error: error.message });
+    }
+};
+
+// Borrar usuario (admin)
+const deleteUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        await User.findByIdAndDelete(userId);
+        res.json({ message: 'Usuario eliminado exitosamente' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error al eliminar usuario', error: error.message });
+    }
+};
+
+// Obtener lista de usuarios (admin)
+const getUsers = async (req, res) => {
+    try {
+        const users = await User.find({}, '-password');
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener usuarios', error: error.message });
+    }
+};
+
+module.exports = {
+    register,
+    updateProfile,
+    deleteUser,
+    getUsers
+}; 
