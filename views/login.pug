@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title Login
+    link(rel="stylesheet", href="/css/styles.css")
+  body
+    .container
+      h1 Iniciar Sesión
+      form(action="/login", method="POST")
+        label(for="email") Correo electrónico
+        input(type="email", name="email", required)
+        
+        label(for="password") Contraseña
+        input(type="password", name="password", required)
+        
+        button(type="submit") Ingresar
+      p ¿No tienes una cuenta? 
+        a(href="/register") Regístrate aquí
