@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  .container
+    h1 Mis Favoritos
+
+    if favoritos.length > 0
+      each oferta in favoritos
+        .card
+          h2= oferta.titulo
+          p 
+            strong Descripción: 
+            | #{oferta.descripcion}
+          p 
+            strong País: 
+            | #{oferta.pais}
+          p 
+            strong Salario: 
+            | #{oferta.salario}
+
+          form(action=`/favoritos/${oferta.id}/delete`, method="POST")
+            button(type="submit") Eliminar de favoritos
+    else
+      p No has guardado ninguna oferta aún.
