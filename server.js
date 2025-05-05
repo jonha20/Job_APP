@@ -38,10 +38,10 @@ const favoriteRoutes = require('./routes/favorite_pgadmin.routes');
 app.use('/', authRoutes);
 
 // Rutas API
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/ads', adRoutes);
-app.use('/api/favorites', favoriteRoutes);
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/ads', adRoutes);
+app.use('/favorites', favoriteRoutes);
 
 app.get('/', (req, res) => {
   res.render('home')

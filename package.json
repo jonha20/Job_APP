@@ -16,7 +16,9 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.3",
     "morgan": "^1.10.0",
-    "pg": "^8.15.6"
+    "pg": "^8.15.6",
+    "playwright": "^1.52.0",
+    "pug": "^3.0.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
