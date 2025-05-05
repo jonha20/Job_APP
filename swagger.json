@@ -1,0 +1,257 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Job App API",
+        "description": "API documentation for the Job App project. This API allows you to manage users, favourites (stored in SQL), and ads (stored in MongoDB)."
+    },
+    "host": "localhost:3000",
+    "basePath": "/api",
+    "schemes": ["http"],
+    "paths": {
+        "/users": {
+            "get": {
+                "summary": "Get all users",
+                "description": "Retrieve a list of all users from the SQL database.",
+                "responses": {
+                    "200": {
+                        "description": "A list of users."
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new user",
+                "description": "Add a new user to the SQL database.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "user",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User created successfully."
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "put": {
+                "summary": "Update a user",
+                "description": "Update an existing user in the SQL database.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "body",
+                        "name": "user",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User updated successfully."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a user",
+                "description": "Remove a user from the SQL database.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully."
+                    }
+                }
+            }
+        },
+        "/favourites": {
+            "get": {
+                "summary": "Get all favourites",
+                "description": "Retrieve a list of all favourites from the SQL database.",
+                "responses": {
+                    "200": {
+                        "description": "A list of favourites."
+                    }
+                }
+            },
+            "post": {
+                "summary": "Add a favourite",
+                "description": "Add a new favourite to the SQL database.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "favourite",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Favourite"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Favourite added successfully."
+                    }
+                }
+            }
+        },
+        "/favourites/{id}": {
+            "delete": {
+                "summary": "Delete a favourite",
+                "description": "Remove a favourite from the SQL database.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Favourite deleted successfully."
+                    }
+                }
+            }
+        },
+        "/ads": {
+            "get": {
+                "summary": "Get all ads",
+                "description": "Retrieve a list of all ads from the MongoDB database.",
+                "responses": {
+                    "200": {
+                        "description": "A list of ads."
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new ad",
+                "description": "Add a new ad to the MongoDB database.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "ad",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Ad"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Ad created successfully."
+                    }
+                }
+            }
+        },
+        "/ads/{id}": {
+            "put": {
+                "summary": "Update an ad",
+                "description": "Update an existing ad in the MongoDB database.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "ad",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Ad"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ad updated successfully."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete an ad",
+                "description": "Remove an ad from the MongoDB database.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ad deleted successfully."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "Favourite": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                },
+                "itemId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Ad": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                }
+            }
+        }
+    }
+}

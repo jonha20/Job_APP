@@ -5,6 +5,8 @@ const app = express(); // Inciializar servidor con express
 const port = 3000; // Puerto a usar por el servidor
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 // Conexión a MongoDB
 const mongoURL = process.env.MONGOURL;
@@ -43,14 +45,21 @@ app.use('/users', userRoutes);
 app.use('/ads', adRoutes);
 app.use('/favorites', favoriteRoutes);
 
-app.get('/', (req, res) => {
-  res.render('home')
-});
+// Documentación
+// http://localhost:3000/api-swagger
+app.use('/api-swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
+
+// app.get('/', (req, res) => {
+//   res.render('home')
+// });
 
 // Middleware para manejar errores 404
 app.use((req, res) => {
   res.status(404).render('error', { message: 'Página no encontrada' });
 });
+
 
 // Middleware para manejar errores
 app.use((err, req, res, next) => {
