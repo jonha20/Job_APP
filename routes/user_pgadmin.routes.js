@@ -18,10 +18,4 @@ router.put("/profile", Userpgadmin.updateUser);
 // Eliminar user
 router.delete("/", auth, Userpgadmin.deleteUser);
 
-//Login
-router.post('/login', Userpgadmin.loginUser);
-
-// Logout
-router.post('/logout', Userpgadmin.logoutUser);
-
 module.exports = router;
