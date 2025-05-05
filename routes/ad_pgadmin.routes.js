@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Adpgadmin = require('../controllers/ad_pgadmin.controller');
 const auth = require('../middlewares/auth');
-
+const isAdmin = require("../middlewares/isAdmin");
 
 // Crear nuevo anuncio
-router.post('/',auth,Adpgadmin.createAd);
+router.post('/',auth, isAdmin ,Adpgadmin.createAd);
 
 // Obtener todos los anuncios
 router.get('/', Adpgadmin.getAllAds);
@@ -14,9 +14,9 @@ router.get('/', Adpgadmin.getAllAds);
 router.get('/:id', Adpgadmin.getAdById);
 
 // Actualizar anuncio
-router.put('/', auth, Adpgadmin.updateAd);
+router.put('/', auth, isAdmin, Adpgadmin.updateAd);
 
 // Eliminar anuncio
-router.delete('/',auth, Adpgadmin.deleteAd);
+router.delete('/',auth, isAdmin ,Adpgadmin.deleteAd);
 
 module.exports = router; 
