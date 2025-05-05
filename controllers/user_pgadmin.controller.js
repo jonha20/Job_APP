@@ -151,6 +151,34 @@ const logoutUser = async(req, res) => {
   }
 };
 
+const recoverPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+      const user = await Userpgadmin.getUserByEmail(email);
+      if (!user) {
+          return res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+      // Aquí puedes enviar un correo electrónico al usuario con el enlace para restablecer la contraseña
+      res.status(200).json({ message: 'Correo de recuperación enviado' });
+  } catch (error) {
+      console.error('Error al recuperar la contraseña:', error);
+      res.status(500).json({ message: 'Error interno del servidor' });
+  }
+};
+
+const restorePassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+  try {
+      const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+      await Userpgadmin.updateUserPassword(email, hashedPassword);
+      res.status(200).json({ message: 'Contraseña restablecida con éxito' });
+  } catch (error) {
+      console.error('Error al restablecer la contraseña:', error);
+      res.status(500).json({ message: 'Error interno del servidor' });
+  }
+};
+
+
 module.exports = {
     getAllUsers,
     getUserById,
@@ -159,4 +187,6 @@ module.exports = {
     deleteUser,
     loginUser,
     logoutUser,
+    recoverPassword,
+    restorePassword,
 }; 

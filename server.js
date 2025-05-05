@@ -6,7 +6,7 @@ const port = 3000; // Puerto a usar por el servidor
 const morgan = require('morgan');
 
 // Conexión a MongoDB
-const mongoURL = `mongodb+srv://jonathan:Cubolata1@jobapp.h5e4e9x.mongodb.net/jobapp?retryWrites=true&w=majority`;
+const mongoURL = process.env.MONGOURL;
 mongoose.connect(mongoURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

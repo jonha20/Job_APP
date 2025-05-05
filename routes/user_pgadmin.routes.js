@@ -24,4 +24,10 @@ router.post('/login', Userpgadmin.loginUser);
 // Logout
 router.post('/logout', Userpgadmin.logoutUser);
 
+// Recuperar contraseña
+router.put('/recover', Userpgadmin.recoverPassword);
+
+// Restaurar contraseña
+router.put('/restore', Userpgadmin.restorePassword);
+
 module.exports = router;
