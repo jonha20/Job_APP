@@ -163,6 +163,46 @@ const existUser = async(email) => {
   return result
 };
 
+const recoverPassword = async (email) => {
+  try
+  {
+      const user = await pool.query(queries.getUserByEmail, [email]);
+      if (user.rows.length === 0) {
+        return res.status(404).json({ msg: "Usuario no encontrado" });
+      }
+  
+      const token = jwt.sign({ id: user.rows[0].id }, process.env.JWT_SECRET, {
+        expiresIn: "1h",
+      });
+  
+      await pool.query(queries.updateUserPassword, [
+        token,
+        email,
+      ]);
+  
+      // Aquí deberías enviar el token al usuario por correo electrónico
+      // Por simplicidad, lo estamos devolviendo en la respuesta
+      res.json({ msg: "Token enviado al correo electrónico", token });
+    }
+    catch (err) {
+      console.error(err);
+      res.status(500).json({ msg: "Error al recuperar la contraseña" });
+    }
+}
+
+const restorePassword = async (token, newPassword) => {
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+
+    await pool.query(queries.updateUserPassword, [newPassword, userId]);
+    res.json({ msg: "Contraseña actualizada con éxito" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Error al actualizar la contraseña" });
+  }
+};
+
 const ad = {
   getAllUsers,
   getUserById,
@@ -172,6 +212,8 @@ const ad = {
   setLoggedTrue,
   setLoggedFalse,
   existUser,
+  recoverPassword,
+  restorePassword,
 };
 
 module.exports = ad; // Exportar el objeto ad con la función createAd

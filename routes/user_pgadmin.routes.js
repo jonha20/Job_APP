@@ -18,4 +18,10 @@ router.put("/profile", Userpgadmin.updateUser);
 // Eliminar user
 router.delete("/", auth, Userpgadmin.deleteUser);
 
+// Recuperar contraseña
+router.put('/recover', Userpgadmin.recoverPassword);
+
+// Restaurar contraseña
+router.put('/restore', Userpgadmin.restorePassword);
+
 module.exports = router;

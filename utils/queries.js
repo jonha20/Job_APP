@@ -41,6 +41,11 @@ const queries = {
   addUserFavorite: `INSERT INTO oferta (title, description, country, salary, id_user)
             VALUES ($1,$2,$3,$4,$5);`,
   deleteUserFavourite: `DELETE FROM oferta WHERE title=$1;`,
+
+  //RECOVER / RESET PASSWORD
+
+  getUserByEmail: `SELECT * FROM users WHERE email=$1;`,
+  updateUserPassword: `UPDATE users SET password=$1 WHERE email=$2;`,
 };
 
 module.exports = queries;
