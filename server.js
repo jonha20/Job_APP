@@ -31,7 +31,7 @@ app.set("views", "./views"); // Carpeta donde se encuentran las vistas
 // Importar rutas
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user_pgadmin.routes');
-const adRoutes = require('./routes/ad_pgadmin.routes');
+const adRoutes = require('./routes/ad.routes');
 const favoriteRoutes = require('./routes/favorite_pgadmin.routes');
 
 // Rutas de autenticación (vistas)
