@@ -72,8 +72,6 @@ const updateUser = async (user) => {
     const data = await client.query(queries.updateUser, [
       email,
       name,
-      token,
-      logged,
       rol,
       old_email,
     ]);
