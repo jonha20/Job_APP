@@ -19,12 +19,12 @@ async function login(req, res) {
     try {
         const user = await findUserByEmail(email);
         if (user && await bcrypt.compare(password, user.password)) {
-            const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ id: user.id, rol: user.rol }, process.env.JWT_SECRET, { expiresIn: '1h' });
             res.cookie('token', token, { httpOnly: true });
            
             await pool.query("UPDATE users SET logged = true WHERE id = $1", [user.id]);
   
-            res.redirect(user.role === 'admin' ? '/home' : '/register');
+            res.redirect(user.rol === 'admin' ? '/home' : '/home');
         } else {
             res.status(401).send('Credenciales inválidas');
         }

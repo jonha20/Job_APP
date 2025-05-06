@@ -48,9 +48,9 @@ app.use('/api-swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 
-// app.get('/', (req, res) => {
-//   res.render('home')
-// });
+app.get('/home', (req, res) => {
+  res.render('home')
+});
 
 // Middleware para manejar errores 404
 app.use((req, res) => {
