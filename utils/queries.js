@@ -26,11 +26,9 @@ const queries = {
     SET 
         email=$1, 
         name=$2, 
-        password=$3,  
-        logged=$4,
-        rol=$5
+        rol=$3
     WHERE
-        email=$6;`,
+        email=$4;`,
   deleteUser: `DELETE FROM users WHERE email=$1;`,
 
   //Favoritos

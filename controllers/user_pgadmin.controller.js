@@ -74,8 +74,6 @@ const updateUser = async (req, res) => {
     if (
         "email" in updateUser &&
         "name" in updateUser &&
-        "token" in updateUser &&
-        "logged" in updateUser &&
         "rol" in updateUser &&
         "old_email" in updateUser
       ) {
@@ -95,7 +93,7 @@ const updateUser = async (req, res) => {
 
 //deleteUser
 const deleteUser = async (req, res) => {
-    const { email } = req.body;
+    const { email } = req.params;
     try {
         const response = await Userpgadmin.deleteUser(email);
         if (response) {

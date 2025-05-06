@@ -5,7 +5,7 @@ const auth = require('../middlewares/auth');
 const adminAuth = require('../middlewares/adminAuth');
 
 // GET /dashboard - Vista del administrador para crear y visualizar sus anuncios
-router.get('/dashboard', auth, adminAuth, async (req, res) => {
+router.get('/:id',  async (req, res) => {
     try {
         // Obtener todos los anuncios creados por el administrador
         const result = await pool.query(

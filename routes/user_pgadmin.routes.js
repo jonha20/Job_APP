@@ -4,20 +4,17 @@ const Userpgadmin = require("../controllers/user_pgadmin.controller");
 const auth = require("../middlewares/auth");
 const isAdmin = require("../middlewares/isAdmin");
 
-// Crear nuevo user
-router.post("/signup", Userpgadmin.createUser);
-
 // Obtener todos los users
-router.get("/", auth, isAdmin, Userpgadmin.getAllUsers);
+router.get("/", auth , isAdmin, Userpgadmin.getAllUsers);
 
 // Obtener user por ID
-router.get("/:id", auth, Userpgadmin.getUserById);
+router.get("/:id", auth, isAdmin, Userpgadmin.getUserById);
 
 // Actualizar user
-router.put("/profile", Userpgadmin.updateUser);
+router.put("/", Userpgadmin.updateUser);
 
 // Eliminar user
-router.delete("/", auth, isAdmin, Userpgadmin.deleteUser);
+router.delete("/:email", auth, isAdmin, Userpgadmin.deleteUser);
 
 // Recuperar contraseña
 router.put('/recoverpassword', Userpgadmin.recoverPassword);

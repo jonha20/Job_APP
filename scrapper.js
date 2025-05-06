@@ -47,7 +47,7 @@ const readWrite = async () => {
 
   try {
     await client.connect();
-    const database = client.db("job_app"); // Nombre de la base de datos
+    const database = client.db("test"); // Nombre de la base de datos
     const collection = database.collection("jobs"); // Nombre de la colección
 
     // Insertar los trabajos en la colección

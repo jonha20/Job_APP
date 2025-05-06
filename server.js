@@ -7,17 +7,10 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const connectDB = require('./config/mongo_config'); // Importa la conexión a MongoDB
 
 // Conexión a MongoDB
-const mongoURL = process.env.MONGOURL;
-mongoose.connect(mongoURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 5000,
-    socketTimeoutMS: 45000,
-})
-    .then(() => console.log('Conectado a MongoDB'))
-    .catch(err => console.error('Error conectando a MongoDB:', err));
+connectDB();
 
 // Middlewares
 app.use(express.json()); // Middleware para parsear el body de las peticiones
@@ -35,6 +28,7 @@ const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user_pgadmin.routes');
 const adRoutes = require('./routes/ad.routes');
 const favoriteRoutes = require('./routes/favorite_pgadmin.routes');
+const dashboardRoutes = require('./routes/admin.routes');
 
 // Rutas de autenticación (vistas)
 app.use('/', authRoutes);
@@ -44,6 +38,7 @@ app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/ads', adRoutes);
 app.use('/favorites', favoriteRoutes);
+app.use('/dashboard', dashboardRoutes)
 
 // Documentación
 // http://localhost:3000/api-swagger
