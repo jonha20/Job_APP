@@ -7,17 +7,10 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const connectDB = require('./config/mongo_config'); // Importa la conexión a MongoDB
 
 // Conexión a MongoDB
-const mongoURL = process.env.MONGOURL;
-mongoose.connect(mongoURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 5000,
-    socketTimeoutMS: 45000,
-})
-    .then(() => console.log('Conectado a MongoDB'))
-    .catch(err => console.error('Error conectando a MongoDB:', err));
+connectDB();
 
 // Middlewares
 app.use(express.json()); // Middleware para parsear el body de las peticiones
