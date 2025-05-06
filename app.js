@@ -2,8 +2,22 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+// Importar rutas
+const adminRoutes = require('./routes/admin.routes');
+const authRoutes = require('./routes/auth.routes');
+const userRoutes = require('./routes/user.routes');
+
 // Middleware para parsear JSON
 app.use(express.json());
+
+// Rutas de autenticación
+app.use('/api/auth', authRoutes);
+
+// Rutas de administrador
+app.use('/api/admin', adminRoutes);
+
+// Rutas de usuario
+app.use('/api/users', userRoutes);
 
 // Endpoints de usuario
 app.post('/api/user', (req, res) => {
