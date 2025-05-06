@@ -29,6 +29,7 @@ const userRoutes = require('./routes/user_pgadmin.routes');
 const adRoutes = require('./routes/ad.routes');
 const favoriteRoutes = require('./routes/favorite_pgadmin.routes');
 const dashboardRoutes = require('./routes/admin.routes');
+const passwordRoutes = require('./routes/password.routes');
 
 // Rutas de autenticación (vistas)
 app.use('/', authRoutes);
@@ -38,7 +39,8 @@ app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/ads', adRoutes);
 app.use('/favorites', favoriteRoutes);
-app.use('/dashboard', dashboardRoutes)
+app.use('/dashboard', dashboardRoutes);
+app.use('/password', passwordRoutes);
 
 // Documentación
 // http://localhost:3000/api-swagger

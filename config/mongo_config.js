@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        const mongoURL = process.env.MONGOURL; // Asegúrate de que esta variable esté configurada en tu archivo .env
+        const mongoURL = process.env.MONGOURL || 'mongodb://localhost:27017/jobapp';
         await mongoose.connect(mongoURL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
