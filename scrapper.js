@@ -45,16 +45,25 @@ const readWrite = async () => {
   const uri = process.env.MONGOURL; // Cambia esto si tu MongoDB está en otro host o puerto
   const client = new MongoClient(uri);
 
+  
   try {
     await client.connect();
     const database = client.db("test"); // Nombre de la base de datos
     const collection = database.collection("jobs"); // Nombre de la colección
 
-    // Insertar los trabajos en la colección
-    const result = await collection.insertMany(jobs);
-    console.log(
-      `${result.insertedCount} jobs were inserted into the database.`
-    );
+    let insertedCount = 0;
+
+    for (const job of jobs) {
+      // Verificar si la oferta ya existe en la base de datos
+      const existingJob = await collection.findOne({ title: job.title });
+      if (!existingJob) {
+        // Insertar solo si no existe
+        await collection.insertOne(job);
+        insertedCount++;
+      }
+    }
+
+    console.log(`${insertedCount} new jobs were inserted into the database.`);
   } catch (error) {
     console.error("Error connecting to MongoDB or inserting data:", error);
   } finally {
