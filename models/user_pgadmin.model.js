@@ -45,6 +45,22 @@ const getUserById = async (id) => {
   return result;
 };
 
+// GET by Email
+const getUserByEmail = async (email) => {
+  let client, result;
+  try {
+    client = await pool.connect(); // Espera a abrir conexion
+    const data = await client.query(queries.getUserByEmail, [email]);
+    result = data.rows[0];
+  } catch (err) {
+    console.log(err);
+    throw err;
+  } finally {
+    client.release();
+  }
+  return result;
+};
+
 // CREATE
 const createUser = async(email, name,  password, rol, logged=false) => {
   let client, result;

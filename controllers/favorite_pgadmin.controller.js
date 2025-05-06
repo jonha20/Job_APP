@@ -3,7 +3,7 @@ const Adpgadmin = require("../models/favorite_pgadmin.model");
 //GET
 
 const getUserFavorites = async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.params;
   try {
     const favorites = await Adpgadmin.getUserFavorites(email);
     res.status(200).json(favorites);
@@ -40,21 +40,21 @@ const addUserFavorite = async (req, res) => {
 //DELETE
 
 const deleteUserFavorite = async (req, res) => {
-  const deleteAd = req.body;
-  if ("title" in deleteAd) {
+  const { id } = req.params;
     try {
-      const response = await Adpgadmin.deleteUserFavorite(deleteAd);
-      res.status(200).json({
-        items_updated: response,
-        data: deleteAd,
-      });
+        const response = await Adpgadmin.deleteUserFavorite(id);
+        if (response === 0) {
+            return res.status(404).json({ message: "Entrada no encontrada" });
+        }
+        res.status(200).json({
+            message: "Entrada eliminada exitosamente",
+            items_updated: response,
+        });
     } catch (error) {
-      res.status(500).json({ error: "Error en la BBDD" });
+        console.error("Error al eliminar la entrada:", error);
+        res.status(500).json({ error: "Error en la BBDD", details: error.message });
     }
-  } else {
-    res.status(400).json({ error: "Faltan campos en la entrada" });
-  }
-};
+  };
 
 module.exports = {
   getUserFavorites,

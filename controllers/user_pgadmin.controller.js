@@ -150,7 +150,7 @@ const logoutUser = async(req, res) => {
 };
 
 const recoverPassword = async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.params;
   try {
       const user = await Userpgadmin.getUserByEmail(email);
       if (!user) {

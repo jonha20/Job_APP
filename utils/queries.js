@@ -1,9 +1,9 @@
 const queries = {
   // Anuncios
 
-  createAd: `INSERT INTO oferta (title, description, country, salary, id_user)
+  createAd: `INSERT INTO favourite (title, description, country, salary, id_user)
             VALUES ($1,$2,$3,$4,$5);`,
-  updateAd: `UPDATE oferta
+  updateAd: `UPDATE favourite
 	SET 
         title=$1, 
         description=$2, 
@@ -12,14 +12,15 @@ const queries = {
         id_user=$5
 	WHERE 
         title=$6;`,
-  deleteAd: `DELETE FROM oferta WHERE title=$1;`,
-  getAdById: `SELECT * FROM oferta WHERE id_offer=$1;`,
-  getAllAds: `SELECT * FROM oferta;`,
+  deleteAd: `DELETE FROM favourite WHERE title=$1;`,
+  getAdById: `SELECT * FROM favourite WHERE id_offer=$1;`,
+  getAllAds: `SELECT * FROM favourite;`,
 
   //Usuarios
 
   getUsers: `SELECT * FROM public.users;`,
   getUserById: `SELECT * FROM users WHERE id=$1;`,
+  getUserByEmail: `SELECT * FROM users WHERE email=$1;`,
   createUser: `INSERT INTO users (email, name, password, logged, rol)
             VALUES ($1,$2,$3,$4,$5);`,
   updateUser: `UPDATE users
@@ -34,11 +35,11 @@ const queries = {
   //Favoritos
 
   getUserFavorites: `SELECT email, name, title, description, country, salary FROM users
-                INNER JOIN oferta ON id = id_user
+                INNER JOIN favourite ON id = id_user
                 where email = $1`,
-  addUserFavorite: `INSERT INTO oferta (title, description, country, salary, id_user)
+  addUserFavorite: `INSERT INTO favourite (title, description, country, salary, id_user)
             VALUES ($1,$2,$3,$4,$5);`,
-  deleteUserFavourite: `DELETE FROM oferta WHERE title=$1;`,
+  deleteUserFavourite: `DELETE FROM favourite WHERE id_offer = $1 RETURNING *;`,
 
   //RECOVER / RESET PASSWORD
 

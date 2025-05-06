@@ -7,9 +7,9 @@ const auth = require("../middlewares/auth");
 router.post("/", auth, Adpgadmin.addUserFavorite);
 
 // Obtener favoritos del usuario
-router.get("/", auth, Adpgadmin.getUserFavorites);
+router.get("/:email",  auth, Adpgadmin.getUserFavorites);
 
 // Eliminar de favoritos
-router.delete("/", auth, Adpgadmin.deleteUserFavorite);
+router.delete("/:id", auth, Adpgadmin.deleteUserFavorite);
 
 module.exports = router;
