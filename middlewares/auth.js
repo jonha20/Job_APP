@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/user.model');
 
 const JWT_SECRET = 'your-secret-key'; // En producción, esto debería estar en variables de entorno
 
