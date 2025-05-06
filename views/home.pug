@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  .container
+    h1 Bienvenido a la Bolsa de Trabajo
+
+    // FORMULARIO DE BÚSQUEDA
+    form(action="/search", method="GET")
+      input(type="text", name="query", placeholder="Buscar ofertas, becas, eventos...", required)
+      button(type="submit") Buscar
+
+    // RESULTADOS DE BÚSQUEDA
+    if results && results.length
+      .results
+        each item in results
+          .card
+            h2 #{item.title}
+            p #{item.description}
+            p País: #{item.country}
+            p Salario: #{item.salary}
+            a(href=item.url, target="_blank") Ver más
+
+            // BOTÓN DE FAVORITO SOLO PARA USUARIOS LOGUEADOS
+            if userIsLoggedIn
+              form(action="/favorites", method="POST")
+                input(type="hidden", name="itemId", value=item.id)
+                button(type="submit") Guardar en favoritos
+    else
+      p No hay resultados para mostrar. Intenta hacer una búsqueda.

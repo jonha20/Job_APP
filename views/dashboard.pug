@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  .container
+    h1 Panel de Administración
+
+    //- FORMULARIO PARA NUEVO ANUNCIO
+    h2 Crear nuevo anuncio
+    form(action="/api/ads", method="POST")
+      label(for="titulo") Título
+      input(type="text", name="titulo", required)
+
+      label(for="descripcion") Descripción
+      textarea(name="descripcion", required)
+
+      label(for="pais") País
+      input(type="text", name="pais", required)
+
+      label(for="salario") Salario
+      input(type="text", name="salario", required)
+
+      label(for="enlace") Enlace a la oferta
+      input(type="url", name="enlace", required)
+
+      button(type="submit") Publicar anuncio
+
+    hr
+
+    //- TARJETAS DE ANUNCIOS YA CREADOS
+    h2 Anuncios publicados
+
+    if anuncios && anuncios.length
+      each anuncio in anuncios
+        .card
+          h3= anuncio.titulo
+          p= anuncio.descripcion
+          p País: #{anuncio.pais}
+          p Salario: #{anuncio.salario}
+          a(href=anuncio.enlace, target="_blank") Ver fuente original
+
+          form(action=`/api/ads/${anuncio._id}?_method=DELETE`, method="POST")
+            button(type="submit") Borrar
+
+          a(href=`/dashboard/edit/${anuncio._id}`) Editar
+    else
+      p No hay anuncios publicados aún.
