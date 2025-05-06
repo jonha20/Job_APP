@@ -6,13 +6,29 @@ const getAllAds = async (req, res) => {
     console.log(ads);
 
     if (ads.length === 0) {
-      res.status(404).json({ msj: "No hay Jobs" });
+      // Si no hay anuncios
+      if (req.headers.accept && req.headers.accept.includes("application/json")) {
+        return res.status(404).json({ msj: "No hay Jobs" });
+      } else {
+        return res.render("home", { results: [], userIsLoggedIn: req.session?.user ? true : false });
+      }
+    }
+
+    // Si hay anuncios
+    if (req.headers.accept && req.headers.accept.includes("application/json")) {
+      // Respuesta para API
+      return res.status(200).json(ads);
     } else {
-      res.status(200).json(ads); // Respuesta de la API para 1 producto
+      // Renderizar la vista "home.pug"
+      return res.render("home", { results: ads, userIsLoggedIn: req.session?.user ? true : false });
     }
   } catch (error) {
     console.log(`ERROR: ${error.stack}`);
-    res.status(400).json({ msj: `ERROR: ${error.stack}` });
+    if (req.headers.accept && req.headers.accept.includes("application/json")) {
+      return res.status(400).json({ msj: `ERROR: ${error.stack}` });
+    } else {
+      return res.status(500).send("Error interno del servidor");
+    }
   }
 };
 

@@ -6,7 +6,7 @@
         "description": "API documentation for the Job App project. This API allows you to manage users, favourites (stored in SQL), and ads (stored in MongoDB)."
     },
     "host": "localhost:3000",
-    "basePath": "/api",
+    "basePath": "/",
     "schemes": ["http"],
     "paths": {
         "/users": {
@@ -18,10 +18,12 @@
                         "description": "A list of users."
                     }
                 }
-            },
+            }            
+        },
+        "/register": {
             "post": {
-                "summary": "Create a new user",
-                "description": "Add a new user to the SQL database.",
+                "summary": "Register a new user",
+                "description": "Create a new user in the SQL database.",
                 "parameters": [
                     {
                         "in": "body",
@@ -34,7 +36,7 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "User created successfully."
+                        "description": "User registered successfully."
                     }
                 }
             }
@@ -211,13 +213,16 @@
         "User": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer"
+                "email": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
                 },
-                "email": {
+                "password": {
+                    "type": "string"
+                },
+                "rol": {
                     "type": "string"
                 }
             }

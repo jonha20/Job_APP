@@ -228,6 +228,7 @@ const ad = {
   existUser,
   recoverPassword,
   restorePassword,
+  getUserByEmail,
 };
 
 module.exports = ad; // Exportar el objeto ad con la función createAd

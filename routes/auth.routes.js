@@ -35,22 +35,11 @@ router.post('/login', async (req, res) => {
                 id: user.id,
                 email: user.email,
                 name: user.name,
-                role: user.rol
+                rol: user.rol
             },
             JWT_SECRET,
             { expiresIn: '1h' }
         );
-        
-        res.json({ 
-            message: 'Login exitoso',
-            token,
-            user: {
-                id: user.id,
-                email: user.email,
-                name: user.name,
-                role: user.rol
-            }
-        });
     } catch (error) {
         res.status(500).json({ message: 'Error en el servidor', error: error.message });
     }

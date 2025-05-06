@@ -30,29 +30,6 @@ const getUserById = async (req, res) => {
     }
 };
 
-//createUser
-// const createUser = async (req, res) => {
-//     const insertUser = req.body;
-//     if (
-//         "email" in insertUser &&
-//         "name" in insertUser &&
-//         "token" in insertUser &&
-//         "logged" in insertUser &&
-//         "rol" in insertUser
-//       ) {
-//         try {
-//           const response = await Userpgadmin.createUser(insertUser);
-//           res.status(200).json({
-//             items_updated: response,
-//             data: insertUser,
-//           });
-//         } catch (error) {
-//           res.status(500).json({ error: "Error en la BBDD" });
-//         }
-//       } else {
-//         res.status(400).json({ error: "Faltan campos en la entrada" });
-//       }
-// };
 const createUser = async (req, res) => {
   let data;
   try {
