@@ -44,11 +44,11 @@ const addUserFavorite = async (ad) => {
 
 // DELETE
 
-const deleteUserFavorite = async (title) => {
+const deleteUserFavorite = async (id) => {
   let client, result;
   try {
     client = await pool.connect(); // Espera a abrir conexion
-    const data = await client.query(queries.deleteUserFavourite, [title]);
+    const data = await client.query(queries.deleteUserFavourite, [id]);
     result = data.rowCount;
   } catch (err) {
     console.log(err);
