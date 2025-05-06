@@ -2,23 +2,16 @@ extends layout
 
 block content
   .container
-    h1 Mis Favoritos
+    h1 Tus Favoritos
 
-    if favoritos.length > 0
-      each oferta in favoritos
-        .card
-          h2= oferta.titulo
-          p 
-            strong Descripción: 
-            | #{oferta.descripcion}
-          p 
-            strong País: 
-            | #{oferta.pais}
-          p 
-            strong Salario: 
-            | #{oferta.salario}
-
-          form(action=`/favoritos/${oferta.id}/delete`, method="POST")
-            button(type="submit") Eliminar de favoritos
+    if favoritos.length
+      .cards-container
+        each item in favoritos
+          .card
+            h3= item.title
+            p= item.description
+            p País: #{item.country}
+            p Salario: #{item.salary}
+            button Quitar de favoritos
     else
-      p No has guardado ninguna oferta aún.
+      p No tienes ofertas guardadas aún.

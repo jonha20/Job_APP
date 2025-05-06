@@ -1,46 +1,51 @@
 extends layout
 
 block content
-  .container
-    h1 Panel de Administración
+  .admin-dashboard
+    nav.sidebar
+      input#menu-toggle(type="checkbox")
+      label.menu-btn(for="menu-toggle")
+        .bar
+        .bar
+        .bar
 
-    //- FORMULARIO PARA NUEVO ANUNCIO
-    h2 Crear nuevo anuncio
-    form(action="/api/ads", method="POST")
-      label(for="titulo") Título
-      input(type="text", name="titulo", required)
+      ul.menu
+        li: a(href="/dashboard") Crear anuncio
+        li: a(href="/dashboard/anuncios") Editar anuncios
+        li: a(href="/dashboard/usuarios") Ver usuarios
 
-      label(for="descripcion") Descripción
-      textarea(name="descripcion", required)
+    .main-content
+      .container
+        h1 Panel de Administración
 
-      label(for="pais") País
-      input(type="text", name="pais", required)
+        //- FORMULARIO PARA NUEVO ANUNCIO
+        h2 Crear nuevo anuncio
+        form(action="/api/ads", method="POST")
+          label(for="title") Título
+          input(type="text", name="title", required)
 
-      label(for="salario") Salario
-      input(type="text", name="salario", required)
+          label(for="description") Descripción
+          textarea(name="description", required)
 
-      label(for="enlace") Enlace a la oferta
-      input(type="url", name="enlace", required)
+          label(for="country") País
+          input(type="text", name="country", required)
 
-      button(type="submit") Publicar anuncio
+          label(for="salary") Salario
+          input(type="text", name="salary", required)
 
-    hr
+          button(type="submit") Publicar anuncio
 
-    //- TARJETAS DE ANUNCIOS YA CREADOS
-    h2 Anuncios publicados
+        hr
 
-    if anuncios && anuncios.length
-      each anuncio in anuncios
-        .card
-          h3= anuncio.titulo
-          p= anuncio.descripcion
-          p País: #{anuncio.pais}
-          p Salario: #{anuncio.salario}
-          a(href=anuncio.enlace, target="_blank") Ver fuente original
+        //- TARJETAS DE ANUNCIOS YA CREADOS
+        h2 Anuncios publicados
 
-          form(action=`/api/ads/${anuncio._id}?_method=DELETE`, method="POST")
-            button(type="submit") Borrar
+        if anuncios && anuncios.length
+          each anuncio in anuncios
+            .card
+              h3= anuncio.title
+              p= anuncio.description
+              p País: #{anuncio.country}
+              p Salario: #{anuncio.salary}
+              
 
-          a(href=`/dashboard/edit/${anuncio._id}`) Editar
-    else
-      p No hay anuncios publicados aún.
