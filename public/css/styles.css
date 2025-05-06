@@ -1,10 +1,11 @@
-/* === ESTILO GENERAL GLOBAL === */
+/* === RESET === */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
+/* === BODY === */
 body {
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, #00b09b, #96c93d);
@@ -13,22 +14,34 @@ body {
   padding: 20px;
 }
 
-/* === CONTAINER GENERAL PARA CENTRAR CONTENIDO === */
+/* === CONTAINER === */
 .container {
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(12px);
   padding: 2rem;
   border-radius: 12px;
-  max-width: 500px;
-  margin: 40px auto;
+  max-width: 700px;
+  margin: 20px auto;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* === TITULOS === */
-h1, h2, h3 {
-  text-align: center;
-  margin-bottom: 1.5rem;
+/* === NAVBAR PRINCIPAL === */
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+nav li a {
+  color: white;
   font-weight: bold;
+  text-decoration: none;
+}
+
+nav li a:hover {
+  text-decoration: underline;
 }
 
 /* === FORMULARIOS === */
@@ -40,10 +53,9 @@ form {
 
 label {
   font-weight: 600;
-  margin-bottom: 5px;
 }
 
-input, select, textarea {
+input, textarea, select {
   padding: 10px;
   border: none;
   border-radius: 6px;
@@ -68,38 +80,19 @@ button:hover {
   background-color: #276749;
 }
 
-/* === LINKS Y TEXTO AUXILIAR === */
-p {
-  text-align: center;
-  margin-top: 1rem;
-}
-
+/* === LINKS === */
 a {
   color: #c6f6d5;
   text-decoration: underline;
   font-weight: bold;
 }
 
-/* === ESTILO PARA LISTAS (como en la barra de navegación) === */
-nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
+.mt-title {
+  margin-bottom: 2rem; /* Puedes ajustar el valor */
 }
 
-nav li a {
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-}
 
-nav li a:hover {
-  text-decoration: underline;
-}
-
-/* === TARJETAS DE RESULTADOS (para home y favoritos) === */
+/* === TARJETAS === */
 .card {
   background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(8px);
@@ -123,17 +116,58 @@ nav li a:hover {
   margin-top: 10px;
 }
 
-/* === MEDIA QUERIES PARA RESPONSIVE === */
+/* === DASHBOARD ADMIN === */
+.admin-dashboard {
+  display: flex;
+  flex-direction: column;
+}
+
+/* === MENÚ HAMBURGUESA === */
+.menu-btn {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 10px;
+}
+
+#menu-toggle {
+  display: none;
+}
+
+.sidebar ul.menu {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+#menu-toggle:checked ~ .menu {
+  display: flex;
+}
+
+/* === ESCRITORIO: MENU SIEMPRE VISIBLE === */
 @media (min-width: 768px) {
-  .container {
-    padding: 3rem;
+  .admin-dashboard {
+    flex-direction: row;
+    gap: 20px;
   }
 
-  .card {
-    padding: 2rem;
+  nav.sidebar {
+    min-width: 220px;
   }
 
-  input, button {
-    font-size: 1.1rem;
+  .menu-btn {
+    display: none;
+  }
+
+  .sidebar ul.menu {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  .main-content {
+    flex: 1;
   }
 }

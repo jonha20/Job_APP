@@ -1,19 +1,23 @@
 doctype html
 html
   head
-    meta(charset="UTF-8")
-    title Login
-    link(rel="stylesheet", href="/css/styles.css")
+    title Iniciar Sesión
+    link(rel="stylesheet", href="/css/style.css")
   body
     .container
-      h1 Iniciar Sesión
+      h1.mt-title Iniciar Sesión
+
       form(action="/login", method="POST")
-        label(for="email") Correo electrónico
+        label(for="email") Email:
         input(type="email", name="email", required)
-        
-        label(for="password") Contraseña
+
+        label(for="password") Contraseña:
         input(type="password", name="password", required)
-        
-        button(type="submit") Ingresar
-      p ¿No tienes una cuenta? 
-        a(href="/register") Regístrate aquí
+
+        button(type="submit") Entrar
+
+      p
+        a(href="/password") ¿Olvidaste tu contraseña?
+
+      p
+        a(href="/invitado") Entrar como invitado

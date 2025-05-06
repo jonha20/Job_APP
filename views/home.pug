@@ -1,29 +1,35 @@
-extends layout
+doctype html
+html
+  head
+    title Home
+    link(rel="stylesheet" href="/css/style.css")
+  body
+    .container
+      h1 Ofertas de Empleo
 
-block content
-  .container
-    h1 Bienvenido a la Bolsa de Trabajo
+      // Si el usuario no está logueado
+      if !userIsLoggedIn
+        p
+          a(href="/login") Iniciar sesión
+          | o 
+          a(href="/register") Registrarse
 
-    // FORMULARIO DE BÚSQUEDA
-    form(action="/search", method="GET")
-      input(type="text", name="query", placeholder="Buscar ofertas, becas, eventos...", required)
-      button(type="submit") Buscar
+      // Si el usuario está logueado
+      if userIsLoggedIn
+        p
+          a(href="/logout") Cerrar sesión
+        p
+          a(href="/favorites") Ver mis favoritos
 
-    // RESULTADOS DE BÚSQUEDA
-    if results && results.length
-      .results
-        each item in results
-          .card
-            h2 #{item.title}
-            p #{item.description}
-            p País: #{item.country}
-            p Salario: #{item.salary}
-            a(href=item.url, target="_blank") Ver más
+      // Mostrar las ofertas de empleo
+      each oferta in results
+        .card
+          h3= oferta.title
+          p= oferta.description
+          p País: #{oferta.country}
+          p Salario: #{oferta.salary}
+          
+          if userIsLoggedIn
+            form(action=`/favorites/add/${oferta.id}`, method="POST")
+              button(type="submit") Añadir a favoritos
 
-            // BOTÓN DE FAVORITO SOLO PARA USUARIOS LOGUEADOS
-            if userIsLoggedIn
-              form(action="/favorites", method="POST")
-                input(type="hidden", name="itemId", value=item.id)
-                button(type="submit") Guardar en favoritos
-    else
-      p No hay resultados para mostrar. Intenta hacer una búsqueda.
