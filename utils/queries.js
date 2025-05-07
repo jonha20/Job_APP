@@ -34,9 +34,8 @@ const queries = {
 
   //Favoritos
 
-  getUserFavorites: `SELECT email, name, title, description, country, salary FROM users
-                INNER JOIN favourite ON id = id_user
-                where email = $1`,
+  getUserFavorites: `SELECT * FROM favourite
+                where id_user = $1`,
   addUserFavorite: `INSERT INTO favourite (title, description, country, salary, id_user)
             VALUES ($1,$2,$3,$4,$5);`,
   deleteUserFavourite: `DELETE FROM favourite WHERE id_offer = $1 RETURNING *;`,

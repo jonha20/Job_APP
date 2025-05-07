@@ -35,10 +35,7 @@ async function login(req, res) {
       }
 
       // Actualizar estado de login
-      await client.query(
-          'UPDATE users SET logged = true WHERE email = $1',
-          [email]
-      );
+      await findUserByEmail(email);
 
       // Generar token
       const token = jwt.sign(
@@ -49,7 +46,7 @@ async function login(req, res) {
       
       res.cookie('token', token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
+          secure: false,
           maxAge: 3600000 // 1 hora
       });
 

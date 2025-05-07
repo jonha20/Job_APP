@@ -8,44 +8,57 @@ block content
         .bar
         .bar
         .bar
-
-      ul.menu
-        li: a(href="/dashboard") Crear anuncio
-        li: a(href="/dashboard/anuncios") Editar anuncios
-        li: a(href="/dashboard/usuarios") Ver usuarios
-
+      // Mostrar enlaces según si el usuario está logueado como administrador
+      if isAdmin
+        ul.menu
+          li: a(href="/dashboard") Crear anuncio
+          li: a(href="/dashboard/anuncios") Editar anuncios
+          li: a(href="/dashboard/usuarios") Ver usuarios
     .main-content
       .container
-        h1 Panel de Administración
+        h1 Perfil
 
-        //- FORMULARIO PARA NUEVO ANUNCIO
-        h2 Crear nuevo anuncio
-        form(action="/api/ads", method="POST")
-          label(for="title") Título
-          input(type="text", name="title", required)
+        //- FORMULARIO PARA NUEVO ANUNCIO (solo para administrador)
+        if role == 'admin'
+          h2 Crear nuevo anuncio
+          form(action="/ads", method="POST")
+            label(for="title") Título
+            input(type="text", name="title", required)
 
-          label(for="description") Descripción
-          textarea(name="description", required)
+            label(for="description") Descripción
+            textarea(name="description", required)
 
-          label(for="country") País
-          input(type="text", name="country", required)
+            label(for="country") País
+            input(type="text", name="country", required)
 
-          label(for="salary") Salario
-          input(type="text", name="salary", required)
+            label(for="salary") Salario
+            input(type="text", name="salary", required)
 
-          button(type="submit") Publicar anuncio
+            button(type="submit") Publicar anuncio
 
-        hr
+          //- TARJETAS DE ANUNCIOS YA CREADOS
 
-        //- TARJETAS DE ANUNCIOS YA CREADOS
-        h2 Anuncios publicados
-
-        if anuncios && anuncios.length
-          each anuncio in anuncios
-            .card
-              h3= anuncio.title
-              p= anuncio.description
-              p País: #{anuncio.country}
-              p Salario: #{anuncio.salary}
-              
-
+          if favorites && favorites.length
+            each favorite in favorites
+              .card
+                h3= favorite.title
+                p= favorite.description
+                p País: #{favorite.country}
+                p Salario: #{favorite.salary}
+                form(action=`/favorites/${favorite.id_offer}`, method="POST")
+                  input(type="hidden" name="_method" value="DELETE") 
+                  button(type="submit") Eliminar de favoritos
+          else
+            p No tienes favoritos guardados.
+        else if role === 'user'
+          //- VISTA PARA USUARIOS
+            h1 Mis Favoritos
+          if favorites && favorites.length
+            each favorite in favorites
+              .card
+                h3= favorite.title
+                p= favorite.description
+                p País: #{favorite.country}
+                p Salario: #{favorite.salary}
+          else
+            p No tienes favoritos guardados.
