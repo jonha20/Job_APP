@@ -2,24 +2,28 @@ doctype html
 html
   head
     title Home
-    link(rel="stylesheet" href="/css/style.css")
+    link(rel="stylesheet", href="/css/style.css")
   body
     .container
-      h1 Ofertas de Empleo
 
-      // Si el usuario no está logueado
+      // Mostrar enlaces según si el usuario está logueado
       if !userIsLoggedIn
         p
           a(href="/login") Iniciar sesión
-          | o 
+          br
           a(href="/register") Registrarse
-
-      // Si el usuario está logueado
-      if userIsLoggedIn
+      else
         p
           a(href="/logout") Cerrar sesión
         p
           a(href="/favorites") Ver mis favoritos
+
+      h1 Ofertas de Empleo
+
+      // Contenedor del buscador
+      .search-bar
+        input(type="text" placeholder="Buscar ofertas...")
+        button Buscar
 
       // Mostrar las ofertas de empleo
       each oferta in results
@@ -28,8 +32,9 @@ html
           p= oferta.description
           p País: #{oferta.country}
           p Salario: #{oferta.salary}
-          
+
           if userIsLoggedIn
             form(action=`/favorites/add/${oferta.id}`, method="POST")
               button(type="submit") Añadir a favoritos
+
 
