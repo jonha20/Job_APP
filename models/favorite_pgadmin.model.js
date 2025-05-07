@@ -3,11 +3,11 @@ const queries = require("../utils/queries"); // Queries SQL
 
 // GET
 
-const getUserFavorites = async (email) => {
+const getUserFavorites = async (id) => {
   let client, result;
   try {
     client = await pool.connect(); // Espera a abrir conexion
-    const data = await client.query(queries.getUserFavorites, [email]);
+    const data = await client.query(queries.getUserFavorites, [id]);
     result = data.rows;
   } catch (err) {
     console.log(err);

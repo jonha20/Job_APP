@@ -14,6 +14,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
+    "method-override": "^3.0.0",
     "mongodb": "^6.16.0",
     "mongoose": "^7.8.7",
     "morgan": "^1.10.0",

@@ -44,7 +44,7 @@ const createAd = async (req, res) => {
     });
 
     await ad.save();
-    res.status(201).json({ message: "Anuncio creado exitosamente", ad });
+    res.redirect("/ads"); // Redirigir a la página de anuncios después de crear uno nuevo
   } catch (error) {
     res
       .status(500)

@@ -2,13 +2,16 @@ doctype html
 html
   head
     title Sistema de Roles
+    meta(charset="UTF-8")
+    link(rel="stylesheet" href="/css/styles.css")
+  body
   body
     nav
       ul
         if role === 'admin'
-          li: a(href='/admin/dashboard') Panel de Administración
+          li: p Panel de Administración
         else if role === 'user'
-          li: a(href='/user/dashboard') Panel de Usuario
+          li: p Panel de Usuario
         li: a(href='/logout') Cerrar sesión
 
     block content

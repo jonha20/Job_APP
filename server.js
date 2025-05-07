@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const connectDB = require('./config/mongo_config'); // Importa la conexión a MongoDB
+const methodOverride = require('method-override');
 
 // Conexión a MongoDB
 connectDB();
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public")); // Middleware para servir archivos estáticos de front. CSS,JS,Assets
 app.use(morgan('dev'));
 app.use(cookieParser());
+app.use(methodOverride('_method'));
 
 // Configuración de vistas PUG - Motor de plantillas
 app.set("view engine", "pug");
