@@ -23,19 +23,22 @@ html
 
       // Contenedor del buscador
       .search-bar
-        input(type="text" placeholder="Buscar ofertas...")
-        button Buscar
+        input(type="text" placeholder="Buscar ofertas por país...")
+        button(type="button") Buscar
 
-      // Mostrar las ofertas de empleo
-      each oferta in results
-        .card
-          h3= oferta.title
-          p= oferta.description
-          p País: #{oferta.country}
-          p Salario: #{oferta.salary}
+      // Contenedor de resultados
+      .cards-container
+        each oferta in results
+          .card
+            h3= oferta.title
+            p= oferta.description
+            p País: #{oferta.country}
+            p Salario: #{oferta.salary}
 
-          if userIsLoggedIn
-            form(action=`/favorites/add/${oferta.id}`, method="POST")
-              button(type="submit") Añadir a favoritos
+            if userIsLoggedIn
+              form(action=`/favorites/add/${oferta.id}`, method="POST")
+                button(type="submit") Añadir a favoritos
+
+    script(src="/js/script.js")
 
 
