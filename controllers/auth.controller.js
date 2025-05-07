@@ -15,22 +15,50 @@ async function register(req, res) {
 }
 
 async function login(req, res) {
-    const { email, password } = req.body;
-    try {
-        const user = await findUserByEmail(email);
-        if (user && await bcrypt.compare(password, user.password)) {
-            const token = jwt.sign({ id: user.id, rol: user.rol }, process.env.JWT_SECRET, { expiresIn: '1h' });
-            res.cookie('token', token, { httpOnly: true });
-           
-            await pool.query("UPDATE users SET logged = true WHERE id = $1", [user.id]);
-  
-            res.redirect(user.rol === 'admin' ? '/home' : '/home');
-        } else {
-            res.status(401).send('Credenciales inválidas');
-        }
-    } catch (error) {
-        res.status(500).send('Error en el inicio de sesión');
-    }
+  let client;
+  try {
+      const { email, password } = req.body;
+      
+      // Buscar usuario
+      client = await pool.connect();
+      const result = await client.query(queries.getUserByEmail, [email]);
+      const user = result.rows[0];
+      
+      if (!user) {
+          return res.status(401).json({ message: 'Credenciales inválidas' });
+      }
+
+      // Verificar contraseña
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+          return res.status(401).json({ message: 'Credenciales inválidas' });
+      }
+
+      // Actualizar estado de login
+      await client.query(
+          'UPDATE users SET logged = true WHERE email = $1',
+          [email]
+      );
+
+      // Generar token
+      const token = jwt.sign(
+          { id: user.id, email: user.email, role: user.rol, logged: user.logged }, 
+          process.env.JWT_SECRET, 
+          { expiresIn: '1h' }
+      );
+      
+      res.cookie('token', token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          maxAge: 3600000 // 1 hora
+      });
+
+      res.redirect("/ads"); // Redirigir a la página de inicio después del inicio de sesión exitoso
+  } catch (error) {
+      res.status(500).json({ message: 'Error en el inicio de sesión' });
+  } finally {
+      if (client) client.release();
+  }
 }
 
 async function logout(req, res) {

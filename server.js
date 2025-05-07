@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require("express"); // Importamos el paquete express
-const mongoose = require("mongoose"); // Importamos mongoose para MongoDB
 const app = express(); // Inciializar servidor con express
 const port = 3000; // Puerto a usar por el servidor
 const morgan = require('morgan');
@@ -46,11 +45,6 @@ app.use('/password', passwordRoutes);
 // http://localhost:3000/api-swagger
 app.use('/api-swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-
-
-app.get('/home', (req, res) => {
-  res.render('home')
-});
 
 // Middleware para manejar errores 404
 app.use((req, res) => {

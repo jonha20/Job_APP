@@ -1,34 +1,33 @@
 const Ad = require("../models/ad.model");
+const jwt = require('jsonwebtoken');
+const pool = require("../config/config");
 
 const getAllAds = async (req, res) => {
   try {
-    const ads = await Ad.find({});
-    console.log(ads);
+    let userIsLoggedIn = false;
 
-    if (ads.length === 0) {
-      // Si no hay anuncios
-      if (req.headers.accept && req.headers.accept.includes("application/json")) {
-        return res.status(404).json({ msj: "No hay Jobs" });
-      } else {
-        return res.render("home", { results: [], userIsLoggedIn: req.session?.user ? true : false });
+    // Verificar si hay un token en las cookies
+    const token = req.cookies.token;
+    if (token) {
+      try {
+        // Decodificar el token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Usar el campo "logged" del token si está disponible
+        userIsLoggedIn = decoded.logged || false;
+      } catch (err) {
+        console.error("Error al verificar el token:", err);
       }
     }
 
-    // Si hay anuncios
-    if (req.headers.accept && req.headers.accept.includes("application/json")) {
-      // Respuesta para API
-      return res.status(200).json(ads);
-    } else {
-      // Renderizar la vista "home.pug"
-      return res.render("home", { results: ads, userIsLoggedIn: req.session?.user ? true : false });
-    }
+    // Obtener las ofertas de empleo desde la base de datos
+    const ads = await Ad.find({});
+
+    // Renderizar la vista "home.pug" con los datos
+    return res.render("home", { results: ads, userIsLoggedIn });
   } catch (error) {
-    console.log(`ERROR: ${error.stack}`);
-    if (req.headers.accept && req.headers.accept.includes("application/json")) {
-      return res.status(400).json({ msj: `ERROR: ${error.stack}` });
-    } else {
-      return res.status(500).send("Error interno del servidor");
-    }
+    console.error(`ERROR: ${error.stack}`);
+    return res.status(500).send("Error interno del servidor");
   }
 };
 
