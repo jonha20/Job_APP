@@ -71,9 +71,8 @@ async function logout(req, res) {
             decoded.id,
             ]);
     }
-    res.redirect('/register');
     res.clearCookie("token");
-    res.json({ message: "Logout exitoso" });
+    res.redirect('/login');
   } catch (error) {
     res.status(500).json({ message: "Error en el logout" });
   } finally {
