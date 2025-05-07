@@ -31,11 +31,13 @@ const adRoutes = require('./routes/ad.routes');
 const favoriteRoutes = require('./routes/favorite_pgadmin.routes');
 const dashboardRoutes = require('./routes/admin.routes');
 const passwordRoutes = require('./routes/password.routes');
-
+const scrapperRoutes = require("./routes/scrapper.routes");
 // Rutas de autenticación (vistas)
 app.use('/', authRoutes);
 
 // Rutas API
+
+app.use("/", scrapperRoutes);
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/ads', adRoutes);

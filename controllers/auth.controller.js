@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const pool = require("../config/config");
 const queries = require("../utils/queries");
-const { createUser, findUserByEmail } = require("../models/auth.model"); // Importar la función createUser
+const { createUser } = require("../models/auth.model"); // Importar la función createUser
 
 async function register(req, res) {
   const {email, name,  password, logged = false, rol = "user" } = req.body;
@@ -35,8 +35,9 @@ async function login(req, res) {
       }
 
       // Actualizar estado de login
-      await findUserByEmail(email);
-
+      await client.query("UPDATE users SET logged = true WHERE id = $1", [
+          user.id,
+      ]);
       // Generar token
       const token = jwt.sign(
           { id: user.id, email: user.email, role: user.rol, logged: user.logged }, 

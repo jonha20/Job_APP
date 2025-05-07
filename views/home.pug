@@ -36,7 +36,7 @@ html
             p Salario: #{oferta.salary}
 
             if userIsLoggedIn
-              form(action=`/favorites/add/${oferta.id}`, method="POST")
+              form(action=`/favorites`, method="POST")
                 button(type="submit") Añadir a favoritos
 
     script(src="/js/script.js")

@@ -1,23 +1,11 @@
 extends layout
 
 block content
-  .admin-dashboard
-    nav.sidebar
-      input#menu-toggle(type="checkbox")
-      label.menu-btn(for="menu-toggle")
-        .bar
-        .bar
-        .bar
-      // Mostrar enlaces según si el usuario está logueado como administrador
-      if isAdmin
-        ul.menu
-          li: a(href="/dashboard") Crear anuncio
-          li: a(href="/dashboard/anuncios") Editar anuncios
-          li: a(href="/dashboard/usuarios") Ver usuarios
     .main-content
       .container
         h1 Perfil
-
+        form(action="/favorites", method="POST")
+          button(type="submit") Scrapper
         //- FORMULARIO PARA NUEVO ANUNCIO (solo para administrador)
         if role == 'admin'
           h2 Crear nuevo anuncio

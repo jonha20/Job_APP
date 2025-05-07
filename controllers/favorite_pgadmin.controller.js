@@ -29,25 +29,26 @@ const getUserFavorites = async (req, res) => {
 //CREATE
 
 const addUserFavorite = async (req, res) => {
-  const insertAd = req.body;
-  if (
-    "title" in insertAd &&
-    "description" in insertAd &&
-    "country" in insertAd &&
-    "salary" in insertAd &&
-    "id_user" in insertAd
-  ) {
-    try {
-      const response = await Adpgadmin.addUserFavorite(insertAd);
-      res.status(200).json({
-        items_updated: response,
-        data: insertAd,
-      });
-    } catch (error) {
-      res.status(500).json({ error: "Error en la BBDD" });
+  try {
+    // Obtener el token del usuario
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.status(401).json({ message: "No autorizado, token no encontrado" });
     }
-  } else {
-    res.status(400).json({ error: "Faltan campos en la entrada" });
+
+    // Decodificar el token para obtener el ID del usuario
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+
+
+    // Añadir el anuncio a favoritos
+    const response = await Adpgadmin.addUserFavorite({ userId });
+
+    res.redirect("/favorites"); // Redirigir a la página de anuncios después de añadir a favoritos
+  } catch (error) {
+    console.error("Error al añadir a favoritos:", error);
+    res.status(500).json({ error: "Error en la base de datos", details: error.message });
   }
 };
 

@@ -81,7 +81,7 @@ const createUser = async(email, name,  password, rol, logged=false) => {
 // UPDATE
 
 const updateUser = async (user) => {
-  const { email, name, token, logged, rol, old_email } = user;
+  const { email, name, rol, old_email } = user;
   let client, result;
   try {
     client = await pool.connect(); // Espera a abrir conexion

@@ -18,6 +18,20 @@ const getUserFavorites = async (id) => {
   return result;
 }
 
+// Obtener favoritos por usuario y anuncio
+const getUserFavoriteByAdId = async (userId, adId) => {
+  const client = await pool.connect();
+  try {
+    const result = await client.query(
+      "SELECT * FROM favorites WHERE id_user = $1 AND id_ad = $2",
+      [userId, adId]
+    );
+    return result.rows[0];
+  } finally {
+    client.release();
+  }
+};
+
 //CREATE
 
 const addUserFavorite = async (ad) => {
@@ -62,5 +76,6 @@ const deleteUserFavorite = async (id) => {
 module.exports = {
   getUserFavorites,
   addUserFavorite,
-  deleteUserFavorite
+  deleteUserFavorite,
+  getUserFavoriteByAdId
 };
