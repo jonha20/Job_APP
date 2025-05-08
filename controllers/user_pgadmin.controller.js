@@ -30,6 +30,16 @@ const getUserById = async (req, res) => {
     }
 };
 
+/**
+ * Crea un nuevo usuario si el email y la contraseña son válidos.
+ *
+ * @async
+ * @function createUser
+ * @param {Object} req - Objeto de solicitud HTTP, debe contener `name`, `email`, `token` (como contraseña) y `rol` en el body.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ * @throws Devuelve un error 400 si el email o la contraseña no son válidos.
+ */
+
 const createUser = async (req, res) => {
   let data;
   try {
