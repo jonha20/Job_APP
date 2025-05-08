@@ -194,8 +194,8 @@ const recoverPassword = async (email) => {
         email,
       ]);
   
-      // Aquí deberías enviar el token al usuario por correo electrónico
-      // Por simplicidad, lo estamos devolviendo en la respuesta
+      // Aca se deberia enviar el token al usuario por correo electrónico
+      // Por ahora, lo estamos devolviendo en la respuesta
       res.json({ msg: "Token enviado al correo electrónico", token });
     }
     catch (err) {

@@ -1,6 +1,6 @@
 
 function isAdminMiddleware(req, res, next) {
-  // Asegúrate de que `req.user` exista (lo debe haber puesto authMiddleware antes)
+  
   if (!req.user) {
     return res.status(401).json({ message: "No autenticado" });
   }
