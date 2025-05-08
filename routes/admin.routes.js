@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../config/config');
-const auth = require('../middlewares/auth');
-const adminAuth = require('../middlewares/adminAuth');
 
 // GET /dashboard - Vista del administrador para crear y visualizar sus anuncios
 router.get('/:id',  async (req, res) => {

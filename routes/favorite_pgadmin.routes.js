@@ -5,8 +5,11 @@ const auth = require("../middlewares/auth");
 const Admongo = require("../controllers/ad.controller");
 const isAdmin = require('../middlewares/isAdmin')
 
-// Agregar a favoritos
+// Añadir desde admin offer a mongoDB
 router.post("/", auth, isAdmin,  Admongo.createAd);
+
+// Añadir a favoritos
+router.post("/add", auth, Adpgadmin.addUserFavorite);
 
 // Obtener favoritos del usuario
 router.get("/", auth, Adpgadmin.getUserFavorites);

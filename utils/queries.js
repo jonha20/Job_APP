@@ -39,6 +39,7 @@ const queries = {
   addUserFavorite: `INSERT INTO favourite (title, description, country, salary, id_user)
             VALUES ($1,$2,$3,$4,$5);`,
   deleteUserFavourite: `DELETE FROM favourite WHERE id_offer = $1 RETURNING *;`,
+  duplicatesFavorites: `SELECT * FROM favourite WHERE id_user = $1 AND title = $2;`,
 
   //RECOVER / RESET PASSWORD
 

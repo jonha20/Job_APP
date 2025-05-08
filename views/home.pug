@@ -30,14 +30,13 @@ html
       .cards-container
         each oferta in results
           .card
-            h3= oferta.title
-            p= oferta.description
-            p País: #{oferta.country}
-            p Salario: #{oferta.salary}
+            h3.title= oferta.title
+            p.description= oferta.description
+            p.country País: #{oferta.country}
+            p.salary Salario: #{oferta.salary}
 
             if userIsLoggedIn
-              form(action=`/favorites`, method="POST")
-                button(type="submit") Añadir a favoritos
+              button.add-to-favorites Añadir a favoritos
 
     script(src="/js/script.js")
 

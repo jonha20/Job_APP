@@ -39,13 +39,30 @@ const addUserFavorite = async (req, res) => {
 
     // Decodificar el token para obtener el ID del usuario
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.id;
+    const id_user = decoded.id; // ID del usuario logueado
 
+    // Obtener los datos del anuncio desde el cuerpo de la solicitud
+    const { title, description, country, salary } = req.body;
+
+    // Validar que todos los campos estén presentes
+    if (!title || !description || !country || !salary) {
+      return res.status(400).json({ message: "Faltan campos obligatorios" });
+    }
 
     // Añadir el anuncio a favoritos
-    const response = await Adpgadmin.addUserFavorite({ userId });
+    const response = await Adpgadmin.addUserFavorite({
+      title,
+      description,
+      country,
+      salary,
+      id_user
+    });
 
-    res.redirect("/favorites"); // Redirigir a la página de anuncios después de añadir a favoritos
+    if (response) {
+      res.status(200).json({ message: "Anuncio añadido a favoritos correctamente" });
+    } else {
+      res.status(500).json({ message: "Error al añadir el anuncio a favoritos" });
+    }
   } catch (error) {
     console.error("Error al añadir a favoritos:", error);
     res.status(500).json({ error: "Error en la base de datos", details: error.message });

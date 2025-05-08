@@ -44,7 +44,7 @@ const addUserFavorite = async (ad) => {
       description,
       country,
       salary,
-      id_user,
+      id_user
     ]);
     result = data.rowCount;
   } catch (err) {
@@ -73,9 +73,25 @@ const deleteUserFavorite = async (id) => {
   return result;
 }
 
+const isDuplicate = async (id_user, title) => {
+  let client, result;
+  try {
+    client = await pool.connect(); // Espera a abrir conexion
+    const data = await client.query(queries.duplicatesFavorites, [id_user, title]);
+    result = data.rowCount + " linea duplicada";
+  } catch (err) {
+    console.log(err);
+    throw err;
+  } finally {
+    client.release();
+  }
+  return result;
+}
+
 module.exports = {
   getUserFavorites,
   addUserFavorite,
   deleteUserFavorite,
-  getUserFavoriteByAdId
+  getUserFavoriteByAdId,
+  isDuplicate
 };
