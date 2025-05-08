@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Userpgadmin = require("../controllers/user_pgadmin.controller");
+const Userpgadmin = require("../controllers/user.controller");
 const auth = require("../middlewares/auth");
 const isAdmin = require("../middlewares/isAdmin");
 

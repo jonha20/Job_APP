@@ -4,7 +4,7 @@ Este proyecto consiste en una aplicación web orientada a la búsqueda de oferta
 
 ---
 
-## 🗄️ Base de Datos
+## 🗄️ Bases de Datos
 
 ### PostgreSQL (pgAdmin / Render)
 El sistema utiliza **2 tablas principales** alojadas en PostgreSQL para el almacenamiento estructurado de datos relacionados con usuarios y anuncios favoritos.
