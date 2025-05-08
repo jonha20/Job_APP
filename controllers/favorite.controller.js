@@ -1,4 +1,4 @@
-const Adpgadmin = require("../models/favorite_pgadmin.model");
+const Adpgadmin = require("../models/favorite.model");
 const jwt = require("jsonwebtoken");
 //GET
 

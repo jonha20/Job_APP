@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Adpgadmin = require("../controllers/favorite_pgadmin.controller");
+const Adpgadmin = require("../controllers/favorite.controller");
 const auth = require("../middlewares/auth");
 const Admongo = require("../controllers/ad.controller");
 const isAdmin = require('../middlewares/isAdmin')
