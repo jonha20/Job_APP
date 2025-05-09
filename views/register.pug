@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title Registro
+    link(rel="stylesheet", href="/css/styles.css")
+  body
+    .container
+      h1 Crear Cuenta
+      form(action="/auth/register", method="POST")
+        label(for="name") Nombre completo
+        input(type="text", name="name", required)
+        
+        label(for="email") Correo electrónico
+        input(type="email", name="email", required)
+        
+        label(for="password") Contraseña
+        input(type="password", name="password", required)
+        
+        button(type="submit") Registrarse
+      p ¿Ya tienes una cuenta?
+        a(href="/login") Inicia sesión aquí

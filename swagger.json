@@ -1,0 +1,135 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Users API",
+      "version": "1.0.0",
+      "description": "API para gestión de usuarios"
+    },
+    "paths": {
+      "/users": {
+        "get": {
+          "summary": "Obtener todos los usuarios",
+          "tags": ["Users"],
+          "responses": {
+            "200": {
+              "description": "Lista de usuarios",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Actualizar un usuario",
+          "tags": ["Users"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Usuario actualizado exitosamente"
+            },
+            "400": {
+              "description": "Error de validación"
+            }
+          }
+        }
+      },
+      "/users/{id}": {
+        "get": {
+          "summary": "Obtener un usuario por ID",
+          "tags": ["Users"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "ID del usuario"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Usuario encontrado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Usuario no encontrado"
+            }
+          }
+        }
+      },
+      "/users/{email}": {
+        "delete": {
+          "summary": "Eliminar un usuario por email",
+          "tags": ["Users"],
+          "parameters": [
+            {
+              "name": "email",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "email"
+              },
+              "description": "Email del usuario"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Usuario eliminado exitosamente"
+            },
+            "404": {
+              "description": "Usuario no encontrado"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Juan Pérez"
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "example": "juan@example.com"
+            },
+            "rol": {
+              "type": "string",
+              "example": "user"
+            }
+          },
+          "required": ["email"]
+        }
+      }
+    }
+  }
+  

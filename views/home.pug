@@ -1,0 +1,43 @@
+doctype html
+html
+  head
+    title Home
+    link(rel="stylesheet" href="/css/styles.css")
+
+  body
+    .container
+
+      // Mostrar enlaces según si el usuario está logueado
+      if !userIsLoggedIn
+        p
+          a(href="/login") Iniciar sesión
+          br
+          a(href="/register") Registrarse
+      else
+        p
+          a(href="/logout") Cerrar sesión
+        p
+          a(href="/favorites") Ver mis favoritos
+
+      h1 Ofertas de Empleo
+
+      // Contenedor del buscador
+      .search-bar
+        input(type="text" placeholder="Buscar ofertas por país...")
+        button(type="button") Buscar
+
+      // Contenedor de resultados
+      .cards-container
+        each oferta in results
+          .card
+            h3.title= oferta.title
+            p.description= oferta.description
+            p.country País: #{oferta.country}
+            p.salary Salario: #{oferta.salary}
+
+            if userIsLoggedIn
+              button.add-to-favorites Añadir a favoritos
+
+    script(src="/js/script.js")
+
+

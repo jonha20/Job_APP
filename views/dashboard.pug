@@ -1,0 +1,55 @@
+extends layout
+
+block content
+    .main-content
+      .container
+        h1 Perfil
+        //- FORMULARIO PARA NUEVO ANUNCIO (solo para administrador)
+        if role == 'admin'
+          form(action="/favorites", method="POST")
+          button(type="submit") Scrapper
+          h2 Crear nuevo anuncio
+          form(action="/ads", method="POST")
+            label(for="title") Título
+            input(type="text", name="title", required)
+
+            label(for="description") Descripción
+            textarea(name="description", required)
+
+            label(for="country") País
+            input(type="text", name="country", required)
+
+            label(for="salary") Salario
+            input(type="text", name="salary", required)
+
+            button(type="submit") Publicar anuncio
+
+          //- TARJETAS DE ANUNCIOS YA CREADOS
+
+          if favorites && favorites.length
+            each favorite in favorites
+              .card
+                h3= favorite.title
+                p= favorite.description
+                p País: #{favorite.country}
+                p Salario: #{favorite.salary}
+                form(action=`/favorites/${favorite.id_offer}`, method="POST")
+                  input(type="hidden" name="_method" value="DELETE") 
+                  button(type="submit") Eliminar de favoritos
+          else
+            p No tienes favoritos guardados.
+        else if role === 'user'
+          //- VISTA PARA USUARIOS
+            h1 Mis Favoritos
+          if favorites && favorites.length
+            each favorite in favorites
+              .card
+                h3= favorite.title
+                p= favorite.description
+                p País: #{favorite.country}
+                p Salario: #{favorite.salary}
+                form(action=`/favorites/${favorite.id_offer}`, method="POST")
+                  input(type="hidden" name="_method" value="DELETE") 
+                  button(type="submit") Eliminar de favoritos
+          else
+            p No tienes favoritos guardados.

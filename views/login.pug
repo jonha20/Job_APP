@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title Iniciar Sesión
+    link(rel="stylesheet" href="/css/styles.css")
+  body
+    .container
+      h1.mt-title Iniciar Sesión
+
+      form(action="/login", method="POST")
+        label(for="email") Email:
+        input(type="email", name="email", required)
+
+        label(for="password") Contraseña:
+        input(type="password", name="password", required)
+
+        button(type="submit") Entrar
+
+      p
+        a(href="/password") ¿Olvidaste tu contraseña?
+
+      p
+        a(href="/ads") Entrar como invitado

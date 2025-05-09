@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  .container
+    h1 Tus Favoritos
+
+    if favoritos.length
+      .cards-container
+        each item in favoritos
+          .card
+            h3= item.title
+            p= item.description
+            p País: #{item.country}
+            p Salario: #{item.salary}
+            button Quitar de favoritos
+    else
+      p No tienes ofertas guardadas aún.
