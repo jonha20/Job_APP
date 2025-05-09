@@ -4,10 +4,10 @@ block content
     .main-content
       .container
         h1 Perfil
-        form(action="/favorites", method="POST")
-          button(type="submit") Scrapper
         //- FORMULARIO PARA NUEVO ANUNCIO (solo para administrador)
         if role == 'admin'
+          form(action="/favorites", method="POST")
+          button(type="submit") Scrapper
           h2 Crear nuevo anuncio
           form(action="/ads", method="POST")
             label(for="title") Título
@@ -48,5 +48,8 @@ block content
                 p= favorite.description
                 p País: #{favorite.country}
                 p Salario: #{favorite.salary}
+                form(action=`/favorites/${favorite.id_offer}`, method="POST")
+                  input(type="hidden" name="_method" value="DELETE") 
+                  button(type="submit") Eliminar de favoritos
           else
             p No tienes favoritos guardados.

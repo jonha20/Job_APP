@@ -40,6 +40,7 @@ const getUserById = async (req, res) => {
  * @throws Devuelve un error 400 si el email o la contraseña no son válidos.
  */
 
+
 const createUser = async (req, res) => {
   let data;
   try {
