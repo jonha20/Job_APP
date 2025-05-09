@@ -1,4 +1,4 @@
-const Userpgadmin = require('../models/user_pgadmin.model');
+const Userpgadmin = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const regex = require('../utils/regex');
