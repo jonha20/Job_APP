@@ -15,7 +15,7 @@ const getAllUsers = async (providedPassword, adminPasswordHash) => {
   let client, result;
   try {
     // Verificar permisos
-    await verifyPassword(providedPassword, adminPasswordHash);
+   // await verifyPassword(providedPassword, adminPasswordHash);
 
     client = await pool.connect(); // Espera a abrir conexión
     const data = await client.query(queries.getUsers);
@@ -106,7 +106,7 @@ const deleteUser = async (email, providedPassword, adminPasswordHash) => {
   let client, result;
   try {
     // Verificar permisos
-    await verifyPassword(providedPassword, adminPasswordHash);
+   // await verifyPassword(providedPassword, adminPasswordHash);
 
     client = await pool.connect(); // Espera a abrir conexión
     const data = await client.query(queries.deleteUser, [email]);

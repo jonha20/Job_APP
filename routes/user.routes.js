@@ -5,16 +5,16 @@ const auth = require("../middlewares/auth");
 const isAdmin = require("../middlewares/isAdmin");
 
 // Obtener todos los users
-router.get("/", auth , isAdmin, Userpgadmin.getAllUsers);
+router.get("/", Userpgadmin.getAllUsers);
 
 // Obtener user por ID
-router.get("/:id", auth, isAdmin, Userpgadmin.getUserById);
+router.get("/:id",  Userpgadmin.getUserById);
 
 // Actualizar user
 router.put("/", Userpgadmin.updateUser);
 
 // Eliminar user
-router.delete("/:email", auth, isAdmin, Userpgadmin.deleteUser);
+router.delete("/:email", Userpgadmin.deleteUser);
 
 // Recuperar contraseña
 router.put('/recoverpassword', Userpgadmin.recoverPassword);
